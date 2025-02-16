@@ -1,0 +1,20 @@
+{
+  "name": "quickinstall",
+  "version": "1.0.0",
+  "description": "Install app one one click",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch",
+    "test": "nodemon server.js"
+  },
+  "author": "Amrit",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.6",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "flowbite": "^3.1.2",
+    "nodemon": "^3.1.9",
+    "tailwindcss": "^4.0.6"
+  }
+}
