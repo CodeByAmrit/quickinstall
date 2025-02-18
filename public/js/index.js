@@ -52,34 +52,6 @@ document.getElementById("windows_search").addEventListener("submit", async (even
 
 })
 
-// post for create script
-document.getElementById("window_download_btn").addEventListener("click", (event) => {
-    event.preventDefault();
-    let data = getSelectedStudents().map((value) => {
-        return value.id;
-    })
-    console.log(data);
-})
-
-// send request to  fetch search data 
-async function get_windows_apps(search_value) {
-    const response = await fetch('/windows/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            search_value: search_value.toLowerCase()
-        })
-    });
-    if (response.ok) {
-        return response;
-    }
-    else {
-        return null;
-    }
-}
-
 function showReceivedData(data) {
     const resultsContainer = document.getElementById('results-container');
     resultsContainer.innerHTML = ''; // Clear previous results
@@ -104,21 +76,21 @@ function showReceivedData(data) {
         // Name Column
         const nameCell = document.createElement('th');
         nameCell.scope = 'row';
-        nameCell.classList.add('px-6', 'py-4', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white');
+        nameCell.classList.add('px-6', 'py-4', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white', 'max-w-40', 'overflow-x-hidden');
         nameCell.textContent = app.name;
         row.appendChild(nameCell);
 
         // ID Column
         const idCell = document.createElement('td');
-        idCell.classList.add('px-6', 'py-4');
+        idCell.classList.add('pl-4', 'py-4');
         idCell.textContent = app.id;
         row.appendChild(idCell);
 
         // Version Column
-        const versionCell = document.createElement('td');
-        versionCell.classList.add('px-6', 'py-4');
-        versionCell.textContent = app.version;
-        row.appendChild(versionCell);
+        // const versionCell = document.createElement('td');
+        // versionCell.classList.add('px-6', 'py-1');
+        // versionCell.textContent = app.version;
+        // row.appendChild(versionCell);
 
         // Command Input & Copy Button
         const commandCell = document.createElement('td');
@@ -126,9 +98,9 @@ function showReceivedData(data) {
 
         const commandInput = document.createElement('input');
         commandInput.type = 'text';
-        commandInput.value = `winget install --id ${app.name}`;
+        commandInput.value = `winget install --id ${app.id}`;
         commandInput.readOnly = true;
-        commandInput.classList.add('block', 'w-full', 'p-2', 'text-gray-900', 'border', 'border-gray-300', 'rounded-lg', 'bg-gray-50', 'text-xs', 'focus:ring-blue-500', 'focus:border-blue-500', 'dark:bg-gray-700', 'dark:border-gray-600', 'dark:placeholder-gray-400', 'dark:text-white', 'dark:focus:ring-blue-500', 'dark:focus:border-blue-500');
+        commandInput.classList.add('block', 'w-full', 'p-2', 'text-gray-900', 'border', 'border-gray-300', 'rounded-lg', 'bg-gray-50', 'text-xs', 'focus:ring-blue-500', 'focus:border-blue-500', 'dark:bg-gray-700', 'dark:border-gray-600', 'dark:placeholder-gray-400', 'dark:text-white', 'dark:focus:ring-blue-500', 'dark:focus:border-blue-500', 'min-w-60');
 
         // Remove duplicate ID, now using class instead
         // commandInput.id = 'command-input'; // Remove this line
@@ -151,3 +123,63 @@ function showReceivedData(data) {
     });
 }
 
+document.getElementById("window_download_btn").addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    let selectedApps = getSelectedStudents().map((value) => value.id);
+
+    if (selectedApps.length === 0) {
+        alert("Please select at least one app.");
+        return;
+    }
+
+    console.log("Selected Apps:", selectedApps);
+
+    try {
+        const response = await fetch("/windows/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ selectedApps })
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to generate script");
+        }
+
+        // Convert response to a Blob and trigger download
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = "install_package.zip";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while generating the script.");
+    }
+});
+
+
+// send request to  fetch search data 
+async function get_windows_apps(search_value) {
+    const response = await fetch('/windows/search', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            search_value: search_value.toLowerCase()
+        })
+    });
+    if (response.ok) {
+        return response;
+    }
+    else {
+        return null;
+    }
+}

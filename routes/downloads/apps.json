@@ -1,0 +1,62 @@
+{
+  "WinGetVersion": "1.4.11071",
+  "CreationDate": "2025-02-18T17:35:36.834Z",
+  "Sources": [
+    {
+      "Packages": [
+        {
+          "PackageIdentifier": "Microsoft.VisualStudioCode",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "Alex313031.Codium",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "EclipseFoundation.TheiaBlueprint",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "EclipseFoundation.TheiaIDE",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "Huawei.QuickAppIde",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "LoftLabs.DevPod",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "VSCodium.VSCodium",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "VSCodium.VSCodium.Insiders",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "michidk.vscli",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "pluveto.Upgit",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "zokugun.MrCode",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "Microsoft.VisualStudioCode.CLI",
+          "Version": "latest"
+        },
+        {
+          "PackageIdentifier": "FelixZeller.markdown-oxide",
+          "Version": "latest"
+        }
+      ]
+    }
+  ]
+}
